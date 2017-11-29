@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -20,25 +21,30 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Font characterSelect;
 	Graphics g;
 	Timer t;
+	boolean isininstruction = false;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 60);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
 		t = new Timer(1000 / 60, this);
+		t.start();
 	}
 
 	public void paintComponent(Graphics g) {
 		if (currentState == menuState) {
 			drawMenuState(g);
-		}
-		if (currentState == instructionState) {
+			isininstruction = false;
+		} else if (currentState == instructionState) {
+			isininstruction = true;
 			drawInstructionState(g);
+
 		}
 
 	}
 
 	public void drawMenuState(Graphics g) {
+
 		g.setFont(menuFont);
 		g.drawString("Welcome to my Game!", 200, 400);
 		g.setFont(instructionFont);
@@ -50,19 +56,24 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	public void drawInstructionState(Graphics g) {
 		g.setFont(menuFont);
-		g.drawString("Player One uses WASD to move.", 300, 600);
-
+		g.setColor(Color.RED);
+		g.drawString("Player One uses WASD to move.", 300, 300);
+		g.drawString("Player Two Uses Arrow Keys to move.", 200, 600);
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("Test" + e.getKeyChar());
+		// TODO Auto-generated method stubH
 		if (e.getKeyChar() == KeyEvent.VK_I) {
+			isininstruction = true;
 			currentState = instructionState;
-			System.out.println("Test");
+		}
+		if (e.getKeyChar() == KeyEvent.VK_B && isininstruction == true) {
+			currentState = menuState;
 		}
 		if (e.getKeyChar() == KeyEvent.VK_C) {
+			isininstruction = false;
+			System.out.println("Changing");
 			currentState = characterSelectState;
 		}
 	}
@@ -82,6 +93,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		repaint();
 
 	}
 }

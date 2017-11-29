@@ -1,8 +1,7 @@
 import javax.swing.JFrame;
 
 public class GameRunner {
-	public static int width = 1920;
-	public static int height = 1080;
+
 	JFrame frame;
 	GamePanel gp;
 
@@ -16,7 +15,7 @@ public class GameRunner {
 		frame.addKeyListener(gp);
 		frame.add(gp);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
+		frame.setSize(2000, 2000);
 		frame.setVisible(true);
 
 	}
