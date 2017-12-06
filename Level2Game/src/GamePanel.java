@@ -16,17 +16,22 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public final int instructionState = 3;
 	public final int characterSelectState = 4;
 	public final int endState = 5;
+	public int playeroneSelect = 1;
+	public int playertwoSelect = 1;
+	int squareX = 390;
 	Font menuFont;
 	Font instructionFont;
 	Font characterSelect;
 	Graphics g;
 	Timer t;
+	Arenas a;
 	boolean isininstruction = false;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 60);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
+		a = new Arenas();
 		t = new Timer(1000 / 60, this);
 		t.start();
 	}
@@ -38,9 +43,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		} else if (currentState == instructionState) {
 			isininstruction = true;
 			drawInstructionState(g);
-
+		} else if (currentState == characterSelectState) {
+			isininstruction = false;
+			drawCharacterSelectState(g);
 		}
-
 	}
 
 	public void drawMenuState(Graphics g) {
@@ -61,6 +67,22 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.drawString("Player Two Uses Arrow Keys to move.", 200, 600);
 	}
 
+	public void drawCharacterSelectState(Graphics g) {
+		g.drawRect(400, 500, 200, 200);
+		g.drawRect(800, 500, 200, 200);
+		g.drawRect(450, 550, 100, 100);
+		g.drawOval(850, 550, 100, 100);
+		System.out.println(playeroneSelect);
+		if (playeroneSelect == 1) {
+			g.drawRect(squareX, 490, 220, 220);
+		}
+		if (playeroneSelect == 2) {
+			squareX = 850;
+			g.drawRect(squareX, 490, 220, 220);
+		}
+
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stubH
@@ -75,6 +97,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			isininstruction = false;
 			System.out.println("Changing");
 			currentState = characterSelectState;
+		}
+		if (e.getKeyChar() == KeyEvent.VK_D && currentState == characterSelectState) {
+			playeroneSelect++;
+		}
+		if (e.getKeyChar() == KeyEvent.VK_RIGHT && currentState == characterSelectState) {
+			playertwoSelect++;
 		}
 	}
 
