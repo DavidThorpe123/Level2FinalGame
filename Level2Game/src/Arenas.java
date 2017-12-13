@@ -2,7 +2,7 @@ import java.awt.Graphics;
 
 public class Arenas {
 	public void drawArenaOne(Graphics g) {
-
+		g.drawRect(500, 800, 400, 300);
 	}
 
 	public void drawArenaTwo(Graphics g) {
@@ -12,9 +12,4 @@ public class Arenas {
 	public void drawArenaThree(Graphics g) {
 
 	}
-
-	public void drawArenaFour(Graphics g) {
-
-	}
-
 }

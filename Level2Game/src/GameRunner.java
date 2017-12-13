@@ -15,7 +15,7 @@ public class GameRunner {
 		frame.addKeyListener(gp);
 		frame.add(gp);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
+		frame.setSize(1000, 1000);
 		frame.setVisible(true);
 
 	}

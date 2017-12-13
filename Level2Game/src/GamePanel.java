@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -26,13 +27,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Timer t;
 	Arenas a;
 	boolean isininstruction = false;
+	int arenaSelect = new Random().nextInt(3);
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 60);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		a = new Arenas();
 		t = new Timer(1000 / 60, this);
+		a = new Arenas();
 		t.start();
 	}
 
@@ -46,6 +48,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		} else if (currentState == characterSelectState) {
 			isininstruction = false;
 			drawCharacterSelectState(g);
+		} else if (currentState == gameState) {
+			switch (arenaSelect) {
+			case 0:
+				a.drawArenaOne(g);
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			}
 		}
 	}
 
@@ -74,11 +86,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.drawOval(850, 550, 100, 100);
 		System.out.println(playeroneSelect);
 		if (playeroneSelect == 1) {
+			squareX = 390;
 			g.drawRect(squareX, 490, 220, 220);
 		}
 		if (playeroneSelect == 2) {
-			squareX = 850;
+			squareX = 790;
 			g.drawRect(squareX, 490, 220, 220);
+		}
+		if (playeroneSelect < 1) {
+			playeroneSelect = 2;
+		}
+		if (playeroneSelect > 2) {
+			playeroneSelect = 1;
 		}
 
 	}
@@ -98,8 +117,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			System.out.println("Changing");
 			currentState = characterSelectState;
 		}
+		if (e.getKeyChar() == KeyEvent.VK_ENTER && currentState == characterSelectState) {
+			currentState = gameState;
+		}
 		if (e.getKeyChar() == KeyEvent.VK_D && currentState == characterSelectState) {
 			playeroneSelect++;
+		}
+		if (e.getKeyChar() == KeyEvent.VK_A && currentState == characterSelectState) {
+			playeroneSelect--;
 		}
 		if (e.getKeyChar() == KeyEvent.VK_RIGHT && currentState == characterSelectState) {
 			playertwoSelect++;
