@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	int arenaSelect = new Random().nextInt(3);
 
 	GamePanel() {
-		menuFont = new Font("Arial", Font.BOLD, 60);
+		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
 		t = new Timer(1000 / 60, this);
@@ -49,15 +49,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			isininstruction = false;
 			drawCharacterSelectState(g);
 		} else if (currentState == gameState) {
-			switch (arenaSelect) {
-			case 0:
-				a.drawArenaOne(g);
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			}
+			isininstruction = false;
+			drawGameState(g);
 		}
 	}
 
@@ -66,7 +59,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.setFont(menuFont);
 		g.drawString("Welcome to my Game!", 200, 400);
 		g.setFont(instructionFont);
-		g.drawString("Press I to see the Instructions", 200, 800);
+		g.drawString("Press I to see the Instructions", 250, 800);
 		g.setFont(characterSelect);
 		g.drawString("Press C to Select your Character!", 200, 600);
 
@@ -102,6 +95,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	}
 
+	public void drawGameState(Graphics g) {
+		switch (arenaSelect) {
+		case 0:
+			a.drawArenaOne(g);
+			break;
+		case 1:
+			a.drawArenaTwo(g);
+			break;
+		case 2:
+			a.drawArenaThree(g);
+			break;
+		}
+
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stubH
@@ -116,6 +124,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			isininstruction = false;
 			System.out.println("Changing");
 			currentState = characterSelectState;
+		}
+		if (e.getKeyChar() == KeyEvent.VK_B && currentState == characterSelectState) {
+			currentState = menuState;
 		}
 		if (e.getKeyChar() == KeyEvent.VK_ENTER && currentState == characterSelectState) {
 			currentState = gameState;
