@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 
-public class PlayerOne {
-	PlayerOne(int x, int y, Graphics g) {
+public class PlayerTwo {
+	PlayerTwo(int x, int y, Graphics g) {
 
 	}
 

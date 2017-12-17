@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.setFont(menuFont);
 		g.drawString("Welcome to my Game!", 200, 400);
 		g.setFont(instructionFont);
-		g.drawString("Press I to see the Instructions", 250, 800);
+		g.drawString("Press I to see the Instructions", 175, 800);
 		g.setFont(characterSelect);
 		g.drawString("Press C to Select your Character!", 200, 600);
 
@@ -73,17 +73,17 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	public void drawCharacterSelectState(Graphics g) {
-		g.drawRect(400, 500, 200, 200);
+		g.drawRect(150, 500, 200, 200);
 		g.drawRect(800, 500, 200, 200);
-		g.drawRect(450, 550, 100, 100);
-		g.drawOval(850, 550, 100, 100);
+		g.fillRect(200, 550, 100, 100);
+		g.fillOval(550, 550, 100, 100);
 		System.out.println(playeroneSelect);
 		if (playeroneSelect == 1) {
-			squareX = 390;
+			squareX = 140;
 			g.drawRect(squareX, 490, 220, 220);
 		}
 		if (playeroneSelect == 2) {
-			squareX = 790;
+			squareX = 500;
 			g.drawRect(squareX, 490, 220, 220);
 		}
 		if (playeroneSelect < 1) {
@@ -113,14 +113,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stubH
-		if (e.getKeyChar() == KeyEvent.VK_I) {
+		if (e.getKeyChar() == KeyEvent.VK_I && currentState == menuState) {
 			isininstruction = true;
 			currentState = instructionState;
 		}
 		if (e.getKeyChar() == KeyEvent.VK_B && isininstruction == true) {
 			currentState = menuState;
 		}
-		if (e.getKeyChar() == KeyEvent.VK_C) {
+		if (e.getKeyChar() == KeyEvent.VK_C && currentState == menuState) {
 			isininstruction = false;
 			System.out.println("Changing");
 			currentState = characterSelectState;
