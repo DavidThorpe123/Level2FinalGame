@@ -1,11 +1,6 @@
-import java.awt.Graphics;
-
 public class PlayerTwo {
-	PlayerTwo(int x, int y, Graphics g) {
+	PlayerTwo(int x, int y) {
 
 	}
 
-	public void draw(Graphics g) {
-
-	}
 }

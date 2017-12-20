@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,11 +29,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Arenas a;
 	boolean isininstruction = false;
 	int arenaSelect = new Random().nextInt(3);
+	PlayerOne characterOne;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
+		characterOne = new PlayerOne(400, 600);
 		t = new Timer(1000 / 60, this);
 		a = new Arenas();
 		t.start();
@@ -50,7 +53,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			drawCharacterSelectState(g);
 		} else if (currentState == gameState) {
 			isininstruction = false;
-			drawGameState(g);
+			drawGameState((Graphics2D) g);
 		}
 	}
 
@@ -95,7 +98,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	}
 
-	public void drawGameState(Graphics g) {
+	public void drawGameState(Graphics2D g) {
+
 		switch (arenaSelect) {
 		case 0:
 			a.drawArenaOne(g);
@@ -107,6 +111,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			a.drawArenaThree(g);
 			break;
 		}
+		characterOne.draw(g);
 
 	}
 
