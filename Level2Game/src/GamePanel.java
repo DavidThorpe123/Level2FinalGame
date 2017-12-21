@@ -73,6 +73,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.setColor(Color.RED);
 		g.drawString("Player One uses WASD to move.", 300, 300);
 		g.drawString("Player Two Uses Arrow Keys to move.", 200, 600);
+		g.drawString("Press B to go back.", 200, 800);
 	}
 
 	public void drawCharacterSelectState(Graphics g) {
