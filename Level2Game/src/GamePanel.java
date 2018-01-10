@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		characterOne = new PlayerOne(400, 600);
+		characterOne = new PlayerOne(200, 100);
 		t = new Timer(1000 / 60, this);
 		a = new Arenas();
 		t.start();
@@ -73,7 +73,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.setColor(Color.RED);
 		g.drawString("Player One uses WASD to move.", 300, 300);
 		g.drawString("Player Two Uses Arrow Keys to move.", 200, 600);
-		g.drawString("Press B to go back.", 200, 800);
 	}
 
 	public void drawCharacterSelectState(Graphics g) {
@@ -146,6 +145,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		if (e.getKeyChar() == KeyEvent.VK_RIGHT && currentState == characterSelectState) {
 			playertwoSelect++;
 		}
+		if (e.getKeyChar() == KeyEvent.VK_D && currentState == gameState) {
+			PlayerOne.x = PlayerOne.x + 20;
+		}
+		if (e.getKeyChar() == KeyEvent.VK_A && currentState == gameState) {
+			PlayerOne.x = PlayerOne.x - 20;
+		}
 	}
 
 	@Override
@@ -164,6 +169,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
+		double ac = 0.3;
+		double gravity = 10;
+		gravity = gravity + ac;
+		PlayerOne.y = (int) (PlayerOne.y + gravity);
+		if (gravity > 50) {
+			gravity = 50;
+		}
 
 	}
 }
