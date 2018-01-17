@@ -9,20 +9,35 @@ public class PlayerOne extends JPanel {
 	// Image characterOneImage;
 	public static int x;
 	public static int y;
+	public static int width = 300;
+	public static int height = 200;
+	public static int health = 195;
 	public static ImageObserver io;
+	boolean drawLeft = false;
 	// = new ImageIcon("Untitled-1.gif");
 	public static Image i = Toolkit.getDefaultToolkit().createImage("Untitled-1.gif");
 
-	PlayerOne(int x, int y) {
+	PlayerOne(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
+		this.width = width;
+		this.height = height;
 		// characterOneImage = Toolkit.getDefaultToolkit().createImage("test.png");
 
 	}
 
-	public static void draw(Graphics2D g) {
-		// g.drawImage(i, x, y, this);
-		g.drawImage(i, x, y, 300, 200, io);
+	public void setDrawLeft(boolean drawLeft) {
+		this.drawLeft = drawLeft;
+	}
+
+	public void draw(Graphics2D g) {
+
+		if (drawLeft) {
+			g.drawImage(i, x + width, y, -width, height, io);
+		} else {
+			g.drawImage(i, x, y, width, height, io);
+		}
+
 	}
 
 	public boolean intersect(int x1, int y1, int x2, int y2, int s1, int s2) {

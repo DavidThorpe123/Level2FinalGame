@@ -9,8 +9,8 @@ public class Arenas {
 		g.drawRect(50, 25, 195, 45);
 		g.drawRect(700, 25, 195, 45);
 		g.setColor(Color.GREEN);
-		g.fillRect(50, 25, 195, 45);
-		g.fillRect(700, 25, 195, 45);
+		g.fillRect(50, 25, PlayerOne.health, 45);
+		g.fillRect(700, 25, PlayerOne.health, 45);
 	}
 
 	public void drawArenaTwo(Graphics g) {
@@ -19,8 +19,8 @@ public class Arenas {
 		g.drawRect(50, 25, 195, 45);
 		g.drawRect(700, 25, 195, 45);
 		g.setColor(Color.GREEN);
-		g.fillRect(50, 25, 195, 45);
-		g.fillRect(700, 25, 195, 45);
+		g.fillRect(50, 25, PlayerOne.health, 45);
+		g.fillRect(700, 25, PlayerOne.health, 45);
 	}
 
 	public void drawArenaThree(Graphics g) {
@@ -28,7 +28,7 @@ public class Arenas {
 		g.drawRect(50, 25, 195, 45);
 		g.drawRect(700, 25, 195, 45);
 		g.setColor(Color.GREEN);
-		g.fillRect(50, 25, 195, 45);
-		g.fillRect(700, 25, 195, 45);
+		g.fillRect(50, 25, PlayerOne.health, 45);
+		g.fillRect(700, 25, PlayerOne.health, 45);
 	}
 }

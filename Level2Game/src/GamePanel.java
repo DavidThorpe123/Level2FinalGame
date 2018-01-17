@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		characterOne = new PlayerOne(200, 100);
+		characterOne = new PlayerOne(200, 100, 300, 200);
 		t = new Timer(1000 / 60, this);
 		a = new Arenas();
 		t.start();
@@ -111,11 +111,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			a.drawArenaThree(g);
 			break;
 		}
+
 		characterOne.draw(g);
 
 	}
 
-	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stubH
 		if (e.getKeyChar() == KeyEvent.VK_I && currentState == menuState) {
@@ -147,9 +147,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 		if (e.getKeyChar() == KeyEvent.VK_D && currentState == gameState) {
 			PlayerOne.x = PlayerOne.x + 20;
+			characterOne.setDrawLeft(false);
 		}
 		if (e.getKeyChar() == KeyEvent.VK_A && currentState == gameState) {
 			PlayerOne.x = PlayerOne.x - 20;
+			characterOne.setDrawLeft(true);
+
 		}
 	}
 
@@ -169,13 +172,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-		double ac = 0.3;
-		double gravity = 10;
+		int ac = 5;
+		int gravity = 1;
 		gravity = gravity + ac;
-		PlayerOne.y = (int) (PlayerOne.y + gravity);
-		if (gravity > 50) {
-			gravity = 50;
-		}
+		PlayerOne.y = (PlayerOne.y + gravity);
 
 	}
+
 }
