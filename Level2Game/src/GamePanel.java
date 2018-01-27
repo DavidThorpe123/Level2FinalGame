@@ -16,10 +16,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public final int menuState = 1;
 	public final int gameState = 2;
 	public final int instructionState = 3;
-	public final int characterSelectState = 4;
-	public final int endState = 5;
-	public int playeroneSelect = 1;
-	public int playertwoSelect = 1;
+	public final int endState = 4;
 	int squareX = 390;
 	Font menuFont;
 	Font instructionFont;
@@ -48,54 +45,40 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		} else if (currentState == instructionState) {
 			isininstruction = true;
 			drawInstructionState(g);
-		} else if (currentState == characterSelectState) {
-			isininstruction = false;
-			drawCharacterSelectState(g);
 		} else if (currentState == gameState) {
 			isininstruction = false;
 			drawGameState((Graphics2D) g);
+		} else if (currentState == endState) {
+			isininstruction = false;
+			drawEndState(g);
 		}
 	}
 
 	public void drawMenuState(Graphics g) {
 
 		g.setFont(menuFont);
-		g.drawString("Welcome to my Game!", 200, 400);
+		g.setColor(Color.BLUE);
+		g.drawString("Welcome to my Game!", 275, 200);
+		g.setColor(Color.BLACK);
 		g.setFont(instructionFont);
-		g.drawString("Press I to see the Instructions", 175, 800);
+		g.drawString("Press I to see the Instructions", 200, 400);
+		g.setColor(Color.RED);
 		g.setFont(characterSelect);
-		g.drawString("Press C to Select your Character!", 200, 600);
+		g.drawString("Press S to Start the Game!", 300, 500);
 
 	}
 
 	public void drawInstructionState(Graphics g) {
 		g.setFont(menuFont);
-		g.setColor(Color.RED);
-		g.drawString("Player One uses WASD to move.", 300, 300);
-		g.drawString("Player Two Uses Arrow Keys to move.", 200, 600);
+		g.drawString("Player One uses WASD to move.", 150, 300);
+
 	}
 
-	public void drawCharacterSelectState(Graphics g) {
-		g.drawRect(150, 500, 200, 200);
-		g.drawRect(800, 500, 200, 200);
-		g.fillRect(200, 550, 100, 100);
-		g.fillOval(550, 550, 100, 100);
-		System.out.println(playeroneSelect);
-		if (playeroneSelect == 1) {
-			squareX = 140;
-			g.drawRect(squareX, 490, 220, 220);
-		}
-		if (playeroneSelect == 2) {
-			squareX = 500;
-			g.drawRect(squareX, 490, 220, 220);
-		}
-		if (playeroneSelect < 1) {
-			playeroneSelect = 2;
-		}
-		if (playeroneSelect > 2) {
-			playeroneSelect = 1;
-		}
-
+	public void drawEndState(Graphics g) {
+		g.setFont(menuFont);
+		g.setColor(Color.RED);
+		g.drawString("You Lost! You killed", 200, 400);
+		g.drawString("Press R to Retry!", 200, 700);
 	}
 
 	public void drawGameState(Graphics2D g) {
@@ -117,7 +100,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stubH
+		// TODO Auto-generated method stub
 		if (e.getKeyChar() == KeyEvent.VK_I && currentState == menuState) {
 			isininstruction = true;
 			currentState = instructionState;
@@ -125,26 +108,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		if (e.getKeyChar() == KeyEvent.VK_B && isininstruction == true) {
 			currentState = menuState;
 		}
-		if (e.getKeyChar() == KeyEvent.VK_C && currentState == menuState) {
-			isininstruction = false;
-			System.out.println("Changing");
-			currentState = characterSelectState;
-		}
-		if (e.getKeyChar() == KeyEvent.VK_B && currentState == characterSelectState) {
-			currentState = menuState;
-		}
-		if (e.getKeyChar() == KeyEvent.VK_ENTER && currentState == characterSelectState) {
-			currentState = gameState;
-		}
-		if (e.getKeyChar() == KeyEvent.VK_D && currentState == characterSelectState) {
-			playeroneSelect++;
-		}
-		if (e.getKeyChar() == KeyEvent.VK_A && currentState == characterSelectState) {
-			playeroneSelect--;
-		}
-		if (e.getKeyChar() == KeyEvent.VK_RIGHT && currentState == characterSelectState) {
-			playertwoSelect++;
-		}
+
 		if (e.getKeyChar() == KeyEvent.VK_D && currentState == gameState) {
 			PlayerOne.x = PlayerOne.x + 20;
 			characterOne.setDrawLeft(false);
@@ -154,6 +118,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			characterOne.setDrawLeft(true);
 
 		}
+		if (e.getKeyChar() == KeyEvent.VK_S && currentState == menuState) {
+			currentState = gameState;
+		}
+		if (e.getKeyChar() == KeyEvent.VK_R && currentState == endState) {
+			currentState = menuState;
+		}
+
 	}
 
 	@Override
@@ -176,6 +147,22 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		int gravity = 1;
 		gravity = gravity + ac;
 		PlayerOne.y = (PlayerOne.y + gravity);
+		// Arena 1
+		if (arenaSelect == 0) {
+			if (PlayerOne.x >= Arenas.pX + 300 && PlayerOne.x <= Arenas.pX + 300 && PlayerOne.y > Arenas.pY - 100) {
+				PlayerOne.y = Arenas.pY + 100;
+			}
+			if (PlayerOne.x >= Arenas.pX2 + 100 && PlayerOne.x <= Arenas.pX2 + 100 && PlayerOne.y > Arenas.pY2 - 100) {
+				PlayerOne.y = Arenas.pY2 + 100;
+			}
+			if (PlayerOne.x >= Arenas.pX3 + 100 && PlayerOne.x <= Arenas.pX3 + 100 && PlayerOne.y > Arenas.pY3 - 100) {
+				PlayerOne.y = Arenas.pY3 + 100;
+			}
+			// Arena 1
+		}
+		if (PlayerOne.health <= 0) {
+			currentState = endState;
+		}
 
 	}
 
