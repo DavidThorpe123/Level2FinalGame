@@ -1,8 +1,8 @@
 import java.awt.Graphics;
 
 public class Bullet {
-	int bX = Turret.tX - 5;
-	int bY = Turret.tY;
+	public static int bX = Turret.tX - 5;
+	public static int bY = Turret.tY;
 
 	Bullet() {
 		this.bX = bX;
@@ -14,17 +14,14 @@ public class Bullet {
 	}
 
 	public void update() {
-		if (PlayerOne.x < bX) {
-			bX = bX - 10;
-		} else if (PlayerOne.x > bX) {
-			bX = bX + 10;
+		bX = bX - 5;
+		bY = bY - 5;
+		if (bX - 30 / 2 < 0) {
+			bX = -bX;
 		}
-		if (PlayerOne.y < bY) {
-			bY = bY - 10;
+		if (bX + 30 / 2 > 1000) {
+			bX = -bX;
+		}
 
-		}
-		if (PlayerOne.y > bY) {
-			bY = bY + 10;
-		}
 	}
 }

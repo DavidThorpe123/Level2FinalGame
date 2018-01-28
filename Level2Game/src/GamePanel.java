@@ -27,12 +27,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	boolean isininstruction = false;
 	int arenaSelect = new Random().nextInt(3);
 	PlayerOne characterOne;
+	Turret turretOne;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
 		characterOne = new PlayerOne(200, 100, 300, 200);
+		turretOne = new Turret(1000, 500, 100);
 		t = new Timer(1000 / 60, this);
 		a = new Arenas();
 		t.start();
@@ -96,7 +98,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 
 		characterOne.draw(g);
-
+		turretOne.draw(g);
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -148,20 +150,26 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		gravity = gravity + ac;
 		PlayerOne.y = (PlayerOne.y + gravity);
 		// Arena 1
-		if (arenaSelect == 0) {
-			if (PlayerOne.x >= Arenas.pX + 300 && PlayerOne.x <= Arenas.pX + 300 && PlayerOne.y > Arenas.pY - 100) {
-				PlayerOne.y = Arenas.pY + 100;
-			}
-			if (PlayerOne.x >= Arenas.pX2 + 100 && PlayerOne.x <= Arenas.pX2 + 100 && PlayerOne.y > Arenas.pY2 - 100) {
-				PlayerOne.y = Arenas.pY2 + 100;
-			}
-			if (PlayerOne.x >= Arenas.pX3 + 100 && PlayerOne.x <= Arenas.pX3 + 100 && PlayerOne.y > Arenas.pY3 - 100) {
-				PlayerOne.y = Arenas.pY3 + 100;
-			}
-			// Arena 1
-		}
+		// if (arenaSelect == 0) {
+		// if (PlayerOne.x >= Arenas.pX + 300 && PlayerOne.x <= Arenas.pX + 300 &&
+		// PlayerOne.y > Arenas.pY - 100) {
+		// PlayerOne.y = Arenas.pY + 100;
+		// }
+		// if (PlayerOne.x >= Arenas.pX2 + 100 && PlayerOne.x <= Arenas.pX2 + 100 &&
+		// PlayerOne.y > Arenas.pY2 - 100) {
+		// PlayerOne.y = Arenas.pY2 + 100;
+		// }
+		// if (PlayerOne.x >= Arenas.pX3 + 100 && PlayerOne.x <= Arenas.pX3 + 100 &&
+		// PlayerOne.y > Arenas.pY3 - 100) {
+		// PlayerOne.y = Arenas.pY3 + 100;
+		// }
+		// Arena 1
+		// }
 		if (PlayerOne.health <= 0) {
 			currentState = endState;
+		}
+		if (characterOne.intersect(Bullet.bX, Bullet.bY, PlayerOne.x, PlayerOne.y, 5, 5)) {
+			PlayerOne.health = PlayerOne.health - 5;
 		}
 
 	}
