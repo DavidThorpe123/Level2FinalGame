@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Font menuFont;
 	Font instructionFont;
 	Font characterSelect;
+	Font small;
 	Graphics g;
 	Timer t;
 	Arenas a;
@@ -28,13 +29,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	int arenaSelect = new Random().nextInt(3);
 	PlayerOne characterOne;
 	Turret turretOne;
+	Bullet b;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
 		characterOne = new PlayerOne(200, 100, 300, 200);
-		turretOne = new Turret(1000, 500, 100);
+		small = new Font("Arial", Font.BOLD, 20);
+		turretOne = new Turret(500, 500, 100);
+		b = new Bullet();
 		t = new Timer(1000 / 60, this);
 		a = new Arenas();
 		t.start();
@@ -73,6 +77,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public void drawInstructionState(Graphics g) {
 		g.setFont(menuFont);
 		g.drawString("Player One uses WASD to move.", 150, 300);
+		g.setColor(Color.BLUE);
+		g.setFont(small);
+		g.drawString("Goal: Kill as many turrets as you can before the time is up or lose your health", 150, 500);
 
 	}
 
@@ -88,6 +95,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		switch (arenaSelect) {
 		case 0:
 			a.drawArenaOne(g);
+			Turret.tX = 700;
+			Turret.tY = 475;
 			break;
 		case 1:
 			a.drawArenaTwo(g);
@@ -99,6 +108,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		characterOne.draw(g);
 		turretOne.draw(g);
+		b.draw(g);
 	}
 
 	public void keyTyped(KeyEvent e) {

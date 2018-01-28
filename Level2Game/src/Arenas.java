@@ -20,8 +20,9 @@ public class Arenas {
 		g.drawRect(pX4, pY4, 195, 45);
 		g.setColor(Color.GREEN);
 		g.fillRect(50, 25, PlayerOne.health, 45);
-		g.drawString("Player 1 Health", 50, 35);
+		g.drawString("Player 1 Health", 50, 55);
 		System.out.println("1");
+
 	}
 
 	public void drawArenaTwo(Graphics g) {
@@ -31,7 +32,7 @@ public class Arenas {
 
 		g.setColor(Color.GREEN);
 		g.fillRect(50, 25, PlayerOne.health, 45);
-		g.drawString("Player 1 Health", 50, 35);
+		g.drawString("Player 1 Health", 50, 55);
 		System.out.println("2");
 	}
 
@@ -41,7 +42,8 @@ public class Arenas {
 
 		g.setColor(Color.GREEN);
 		g.fillRect(50, 25, PlayerOne.health, 45);
-		g.drawString("Player 1 Health", 50, 35);
+		g.drawString("Player 1 Health", 50, 55);
 		System.out.println("3");
 	}
+
 }

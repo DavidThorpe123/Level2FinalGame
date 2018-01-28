@@ -14,14 +14,11 @@ public class Turret {
 		this.tX = tX;
 		this.tY = tY;
 		this.tHP = tHP;
-	}
 
-	public void shoot() {
-		Bullet b = new Bullet();
-		b.update();
 	}
 
 	public void draw(Graphics2D g) {
+
 		g.drawImage(i, tX, tY, 100, 100, io);
 	}
 
