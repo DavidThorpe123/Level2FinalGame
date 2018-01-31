@@ -21,7 +21,7 @@ public class Arenas {
 		g.setColor(Color.GREEN);
 		g.fillRect(50, 25, PlayerOne.health, 45);
 		g.drawString("Player 1 Health", 50, 55);
-		System.out.println("1");
+		// System.out.println("1");
 
 	}
 
@@ -33,7 +33,7 @@ public class Arenas {
 		g.setColor(Color.GREEN);
 		g.fillRect(50, 25, PlayerOne.health, 45);
 		g.drawString("Player 1 Health", 50, 55);
-		System.out.println("2");
+		// System.out.println("2");
 	}
 
 	public void drawArenaThree(Graphics g) {
@@ -43,7 +43,7 @@ public class Arenas {
 		g.setColor(Color.GREEN);
 		g.fillRect(50, 25, PlayerOne.health, 45);
 		g.drawString("Player 1 Health", 50, 55);
-		System.out.println("3");
+		// System.out.println("3");
 	}
 
 }

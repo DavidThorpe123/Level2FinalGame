@@ -29,16 +29,17 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	int arenaSelect = new Random().nextInt(3);
 	PlayerOne characterOne;
 	Turret turretOne;
-	Bullet b;
+
+	long time = System.currentTimeMillis();
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		characterOne = new PlayerOne(200, 100, 300, 200);
+		characterOne = new PlayerOne(PlayerOne.x, PlayerOne.y, PlayerOne.width, PlayerOne.height);
 		small = new Font("Arial", Font.BOLD, 20);
 		turretOne = new Turret(500, 500, 100);
-		b = new Bullet();
+
 		t = new Timer(1000 / 60, this);
 		a = new Arenas();
 		t.start();
@@ -105,10 +106,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			a.drawArenaThree(g);
 			break;
 		}
+		if (System.currentTimeMillis() - time > 5000) {
+			time = System.currentTimeMillis();
+			turretOne.fire();
 
+		}
 		characterOne.draw(g);
 		turretOne.draw(g);
-		b.draw(g);
+
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -160,26 +165,23 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		gravity = gravity + ac;
 		PlayerOne.y = (PlayerOne.y + gravity);
 		// Arena 1
-		// if (arenaSelect == 0) {
-		// if (PlayerOne.x >= Arenas.pX + 300 && PlayerOne.x <= Arenas.pX + 300 &&
-		// PlayerOne.y > Arenas.pY - 100) {
-		// PlayerOne.y = Arenas.pY + 100;
-		// }
-		// if (PlayerOne.x >= Arenas.pX2 + 100 && PlayerOne.x <= Arenas.pX2 + 100 &&
-		// PlayerOne.y > Arenas.pY2 - 100) {
-		// PlayerOne.y = Arenas.pY2 + 100;
-		// }
-		// if (PlayerOne.x >= Arenas.pX3 + 100 && PlayerOne.x <= Arenas.pX3 + 100 &&
-		// PlayerOne.y > Arenas.pY3 - 100) {
-		// PlayerOne.y = Arenas.pY3 + 100;
-		// }
-		// Arena 1
-		// }
+		if (arenaSelect == 0) {
+			// System.out.println(Arenas.pX + " " + Arenas.pY);
+			// System.out.println(PlayerOne.x + " " + PlayerOne.y);
+			if (PlayerOne.y + PlayerOne.height >= Arenas.pY && PlayerOne.x + PlayerOne.width >= Arenas.pX
+					&& PlayerOne.x <= Arenas.pX + 175 && PlayerOne.y + PlayerOne.height < Arenas.pY + 100) {
+				// ac = 0;
+				// gravity = 0;
+				PlayerOne.y = Arenas.pY - PlayerOne.height;
+			}
+
+			// Arena 1
+		}
+		if (PlayerOne.y > 1000) {
+			PlayerOne.y = 0;
+		}
 		if (PlayerOne.health <= 0) {
 			currentState = endState;
-		}
-		if (characterOne.intersect(Bullet.bX, Bullet.bY, PlayerOne.x, PlayerOne.y, 5, 5)) {
-			PlayerOne.health = PlayerOne.health - 5;
 		}
 
 	}

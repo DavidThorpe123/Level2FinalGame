@@ -9,17 +9,22 @@ public class Turret {
 	public static int tHP = 100;
 	public static Image i = Toolkit.getDefaultToolkit().createImage("Turret.png");
 	ImageObserver io;
+	Bullet b;
 
 	Turret(int tX, int tY, int tHP) {
 		this.tX = tX;
 		this.tY = tY;
 		this.tHP = tHP;
-
+		b = new Bullet();
 	}
 
 	public void draw(Graphics2D g) {
-
 		g.drawImage(i, tX, tY, 100, 100, io);
+		b.draw(g);
+	}
+
+	public void fire() {
+		b.activate();
 	}
 
 }
