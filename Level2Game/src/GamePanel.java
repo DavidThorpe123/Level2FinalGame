@@ -29,14 +29,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	int arenaSelect = new Random().nextInt(3);
 	PlayerOne characterOne;
 	Turret turretOne;
-
 	long time = System.currentTimeMillis();
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		characterOne = new PlayerOne(PlayerOne.x, PlayerOne.y, PlayerOne.width, PlayerOne.height);
+		characterOne = new PlayerOne(50, 0, 300, 300, 5);
 		small = new Font("Arial", Font.BOLD, 20);
 		turretOne = new Turret(500, 500, 100);
 
@@ -95,15 +94,15 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		switch (arenaSelect) {
 		case 0:
-			a.drawArenaOne(g);
+			a.drawArenaOne(g, characterOne.health);
 			Turret.tX = 700;
 			Turret.tY = 475;
 			break;
 		case 1:
-			a.drawArenaTwo(g);
+			a.drawArenaTwo(g, characterOne.health);
 			break;
 		case 2:
-			a.drawArenaThree(g);
+			a.drawArenaThree(g, characterOne.health);
 			break;
 		}
 		if (System.currentTimeMillis() - time > 5000) {
@@ -127,11 +126,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 
 		if (e.getKeyChar() == KeyEvent.VK_D && currentState == gameState) {
-			PlayerOne.x = PlayerOne.x + 20;
+			characterOne.x = characterOne.x + 20;
 			characterOne.setDrawLeft(false);
 		}
 		if (e.getKeyChar() == KeyEvent.VK_A && currentState == gameState) {
-			PlayerOne.x = PlayerOne.x - 20;
+			characterOne.x = characterOne.x - 20;
 			characterOne.setDrawLeft(true);
 
 		}
@@ -140,6 +139,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 		if (e.getKeyChar() == KeyEvent.VK_R && currentState == endState) {
 			currentState = menuState;
+		}
+		if (e.getKeyChar() == KeyEvent.VK_SPACE && currentState == gameState) {
+			characterOne.shoot();
 		}
 
 	}
@@ -163,24 +165,25 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		int ac = 5;
 		int gravity = 1;
 		gravity = gravity + ac;
-		PlayerOne.y = (PlayerOne.y + gravity);
+		characterOne.y = (characterOne.y + gravity);
 		// Arena 1
 		if (arenaSelect == 0) {
 			// System.out.println(Arenas.pX + " " + Arenas.pY);
 			// System.out.println(PlayerOne.x + " " + PlayerOne.y);
-			if (PlayerOne.y + PlayerOne.height >= Arenas.pY && PlayerOne.x + PlayerOne.width >= Arenas.pX
-					&& PlayerOne.x <= Arenas.pX + 175 && PlayerOne.y + PlayerOne.height < Arenas.pY + 100) {
+			if (characterOne.y + characterOne.height >= Arenas.pY && characterOne.x + characterOne.width >= Arenas.pX
+					&& characterOne.x <= Arenas.pX + 175 && characterOne.y + characterOne.height < Arenas.pY + 100) {
 				// ac = 0;
 				// gravity = 0;
-				PlayerOne.y = Arenas.pY - PlayerOne.height;
+				characterOne.y = Arenas.pY - characterOne.height;
 			}
 
 			// Arena 1
 		}
-		if (PlayerOne.y > 1000) {
-			PlayerOne.y = 0;
+		if (characterOne.y > 1000) {
+			characterOne.y = 0;
+			characterOne.health = characterOne.health - 5;
 		}
-		if (PlayerOne.health <= 0) {
+		if (characterOne.health <= 0) {
 			currentState = endState;
 		}
 

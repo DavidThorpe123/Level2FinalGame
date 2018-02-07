@@ -35,4 +35,12 @@ public class Bullet {
 		bY = Turret.tY;
 	}
 
+	public boolean intersect(int x1, int y1, int x2, int y2, int s1, int s2) {
+		int dx = (x1 - x2) * (x1 - x2);
+		int dy = (y1 - y2) * (y1 - y2);
+		int ds = (s1 - s2) * (s1 - s2);
+		return dx + dy < ds;
+
+	}
+
 }
