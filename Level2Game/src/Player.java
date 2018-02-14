@@ -7,14 +7,16 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-public class PlayerOne extends JPanel {
+public class Player extends JPanel {
 	// Image characterOneImage;
 	public int x;
 	public int y;
+	public int c2X;
+	public int c2Y;
 	public int b2X = x;
 	public int b2Y = y;
-	public int width = 200;
-	public int height = 200;
+	public int width = 300;
+	public int height = 150;
 	public int health = 195;
 	public int ammo = 5;
 	public static ImageObserver io;
@@ -23,9 +25,9 @@ public class PlayerOne extends JPanel {
 	List<PlayerBullet> bullets;
 
 	// = new ImageIcon("Untitled-1.gif");
-	public static Image i = Toolkit.getDefaultToolkit().createImage("Untitled-1.gif");
+	public Image i = Toolkit.getDefaultToolkit().createImage("Untitled-1.gif");
 
-	public PlayerOne(int x, int y, int width, int height, int ammo) {
+	public Player(String img, int x, int y, int width, int height, int ammo) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -34,7 +36,7 @@ public class PlayerOne extends JPanel {
 
 		bullets = new ArrayList<>();
 		// characterOneImage = Toolkit.getDefaultToolkit().createImage("test.png");
-
+		i = Toolkit.getDefaultToolkit().createImage(img);
 	}
 
 	public void setDrawLeft(boolean drawLeft) {
@@ -51,6 +53,7 @@ public class PlayerOne extends JPanel {
 
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).draw(g);
+
 		}
 
 	}
