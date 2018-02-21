@@ -13,7 +13,7 @@ public class Bullet {
 	public void draw(Graphics g) {
 		if (active) {
 			g.setColor(Color.RED);
-			g.fillOval(bX, bY, 10, 10);
+			g.fillOval(bX, bY, 30, 30);
 			update();
 		}
 
@@ -25,6 +25,7 @@ public class Bullet {
 			if (bX <= 0 || bY <= 0) {
 				active = false;
 			}
+
 		}
 
 	}
@@ -33,6 +34,10 @@ public class Bullet {
 		active = true;
 		bX = Turret.tX - 5;
 		bY = Turret.tY;
+	}
+
+	public void deactivate() {
+		active = false;
 	}
 
 	public boolean intersect(int x1, int y1, int x2, int y2, int s1, int s2) {

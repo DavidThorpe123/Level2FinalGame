@@ -10,47 +10,22 @@ public class Arenas {
 	public static int pY3 = 500;
 	public static int pX4 = 50;
 	public static int pY4 = 25;
-	public static int pX5 = 700;
-	public static int pY5 = 25;
 
-	public void drawArenaOne(Graphics g, int health, int ammo) {
+	public void drawArenaOne(Graphics g, int health, int health2, int ammo, int ammo2) {
 		g.fillRect(pX, pY, 300, 100);
 		g.fillRect(pX2, pY2, 100, 100);
 		g.fillRect(pX3, pY3, 100, 100);
 		g.drawRect(pX4, pY4, 195, 45);
 		g.setColor(Color.GREEN);
 		g.fillRect(50, 25, health, 45);
+		g.fillRect(750, 25, health2, 45);
 		g.setColor(Color.BLACK);
-
 		g.drawString("Player 1 Health: " + health, 100, 100);
-		g.drawString("Player 1 Ammo: " + ammo, 100, 200);
+		g.drawString("Player 1 Ammo: " + ammo, 100, 150);
+		g.drawString("Player 2 Health: " + health2, 700, 100);
+		g.drawString("Player 2 Ammo: " + ammo2, 700, 150);
 		// System.out.println("1");
 
-	}
-
-	public void drawArenaTwo(Graphics g, int health, int ammo) {
-		g.fillRect(100, 700, 300, 100);
-		g.fillRect(600, 700, 300, 100);
-		g.drawRect(50, 25, 195, 45);
-
-		g.setColor(Color.GREEN);
-		g.fillRect(50, 25, health, 45);
-		g.setColor(Color.BLACK);
-		g.drawString("Player 1 Health: " + health, 100, 100);
-		g.drawString("Player 1 Ammo: " + ammo, 100, 200);
-		// System.out.println("2");
-	}
-
-	public void drawArenaThree(Graphics g, int health, int ammo) {
-		g.fillRect(100, 700, 200, 100);
-		g.drawRect(50, 25, 195, 45);
-
-		g.setColor(Color.GREEN);
-		g.fillRect(50, 25, health, 45);
-		g.setColor(Color.BLACK);
-		g.drawString("Player 1 Health: " + health, 100, 100);
-		g.drawString("Player 1 Ammo: " + ammo, 100, 200);
-		// System.out.println("3");
 	}
 
 }

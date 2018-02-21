@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -27,18 +26,20 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Timer t;
 	Arenas a;
 	boolean isininstruction = false;
-	int arenaSelect = new Random().nextInt(3);
+	int arenaSelect = 0;
 	Player characterOne;
 	Player characterTwo;
+	public int speed = 5;
 	Turret turretOne;
 	long time = System.currentTimeMillis();
+	public boolean hit = false;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		characterOne = new Player("Untitled-1.gif", 50, 0, 400, 300, 5);
-		characterTwo = new Player("Untitled-1.gif", 500, 0, 400, 300, 5);
+		characterOne = new Player("Player.png", 50, 0, 200, 150, 5);
+		characterTwo = new Player("Player.png", 500, 0, 200, 150, 5);
 		small = new Font("Arial", Font.BOLD, 20);
 		turretOne = new Turret(500, 500, 100);
 
@@ -97,15 +98,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		switch (arenaSelect) {
 		case 0:
-			a.drawArenaOne(g, characterOne.health, characterOne.ammo);
+			a.drawArenaOne(g, characterOne.health, characterTwo.health, characterOne.ammo, characterTwo.ammo);
 			Turret.tX = 700;
 			Turret.tY = 400;
-			break;
-		case 1:
-			a.drawArenaTwo(g, characterOne.health, characterOne.ammo);
-			break;
-		case 2:
-			a.drawArenaThree(g, characterOne.health, characterOne.ammo);
 			break;
 		}
 		if (System.currentTimeMillis() - time > 5000) {
@@ -131,10 +126,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 
 		if (e.getKeyChar() == KeyEvent.VK_D && currentState == gameState) {
+
 			characterOne.x = characterOne.x + 20;
 			characterOne.setDrawLeft(false);
 		}
 		if (e.getKeyChar() == KeyEvent.VK_A && currentState == gameState) {
+
 			characterOne.x = characterOne.x - 20;
 			characterOne.setDrawLeft(true);
 
@@ -147,6 +144,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		if (e.getKeyChar() == KeyEvent.VK_J && currentState == gameState) {
 			characterTwo.x = characterTwo.x - 20;
 			characterTwo.setDrawLeft(true);
+
+		}
+		if (e.getKeyChar() == KeyEvent.VK_W && currentState == gameState) {
+			characterOne.y = characterOne.y - 200;
 
 		}
 		if (e.getKeyChar() == KeyEvent.VK_S && currentState == menuState) {
@@ -193,16 +194,36 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		characterTwo.y = (characterTwo.y + gravity);
 		// Arena 1
 		if (arenaSelect == 0) {
+			System.out.println(hit);
 
 			if (characterOne.y + characterOne.height >= Arenas.pY && characterOne.x + characterOne.width >= Arenas.pX
-					&& characterOne.x <= Arenas.pX + 175 && characterOne.y + characterOne.height < Arenas.pY + 100) {
+					&& characterOne.x <= Arenas.pX + 150 && characterOne.y + characterOne.height < Arenas.pY + 100) {
 
 				characterOne.y = Arenas.pY - characterOne.height;
 			}
 			if (characterTwo.y + characterTwo.height >= Arenas.pY && characterTwo.x + characterTwo.width >= Arenas.pX
-					&& characterTwo.x <= Arenas.pX + 175 && characterTwo.y + characterTwo.height < Arenas.pY + 100) {
+					&& characterTwo.x <= Arenas.pX + 150 && characterTwo.y + characterTwo.height < Arenas.pY + 100) {
 
 				characterTwo.y = Arenas.pY - characterTwo.height;
+			}
+			if (characterOne.y + characterOne.height >= Arenas.pY3 && characterOne.x + characterOne.width >= Arenas.pX3
+					&& characterOne.x <= Arenas.pX3 + 60 && characterOne.y + characterOne.height < Arenas.pY3 + 100) {
+
+				characterOne.y = Arenas.pY3 - characterOne.height;
+			}
+			if (characterTwo.y + characterTwo.height >= Arenas.pY3 && characterTwo.x + characterTwo.width >= Arenas.pX3
+					&& characterTwo.x <= Arenas.pX3 + 60 && characterTwo.y + characterTwo.height < Arenas.pY3 + 100) {
+
+				characterTwo.y = Arenas.pY3 - characterTwo.height;
+			}
+			System.out.println("Bullet X: " + turretOne.b.bX);
+			System.out.println("Bullet Y: " + turretOne.b.bY);
+			if (turretOne.b.bX < characterOne.x + 175 && turretOne.b.bY > characterOne.y
+					&& turretOne.b.bY < characterOne.y + 150 && turretOne.b.active) {
+
+				characterOne.health = characterOne.health - 10;
+				turretOne.b.deactivate();
+
 			}
 
 			// Arena 1
@@ -211,12 +232,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			characterOne.y = 0;
 			characterOne.health = characterOne.health - 5;
 		}
+
 		if (characterOne.health <= 0) {
 			currentState = endState;
 		}
 		if (characterTwo.y > 1000) {
 			characterTwo.y = 0;
-			characterTwo.health = characterOne.health - 5;
+			characterTwo.health = characterTwo.health - 5;
 		}
 		if (characterTwo.health <= 0) {
 			currentState = endState;

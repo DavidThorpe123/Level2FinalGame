@@ -15,8 +15,8 @@ public class Player extends JPanel {
 	public int c2Y;
 	public int b2X = x;
 	public int b2Y = y;
-	public int width = 300;
-	public int height = 150;
+	public int width = 150;
+	public int height = 75;
 	public int health = 195;
 	public int ammo = 5;
 	public static ImageObserver io;
@@ -25,7 +25,7 @@ public class Player extends JPanel {
 	List<PlayerBullet> bullets;
 
 	// = new ImageIcon("Untitled-1.gif");
-	public Image i = Toolkit.getDefaultToolkit().createImage("Untitled-1.gif");
+	public Image i = Toolkit.getDefaultToolkit().createImage("Player.png");
 
 	public Player(String img, int x, int y, int width, int height, int ammo) {
 		this.x = x;
