@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Turret turretOne;
 	long time = System.currentTimeMillis();
 	public boolean hit = false;
+	public boolean p1Won = true;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
@@ -80,18 +81,24 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	public void drawInstructionState(Graphics g) {
 		g.setFont(menuFont);
-		g.drawString("Player One uses WASD to move.", 150, 300);
+		g.drawString("Player One uses WASD to move and space to shoot. Use R to reload", 150, 300);
+		g.drawString("Player Two uses IJKL to move and O to shoot. Use P to reload", 150, 500);
 		g.setColor(Color.BLUE);
 		g.setFont(small);
-		g.drawString("Goal: Kill as many turrets as you can before the time is up or lose your health", 150, 500);
+		g.drawString("Goal: Kill the other player. Also try to avoid the turrets.", 150, 700);
 
 	}
 
 	public void drawEndState(Graphics g) {
 		g.setFont(menuFont);
 		g.setColor(Color.RED);
-		g.drawString("You Lost! You killed", 200, 400);
-		g.drawString("Press R to Retry!", 200, 700);
+		if (p1Won == true) {
+			g.drawString("Player 1 Won!", 200, 400);
+		}
+		if (p1Won == false) {
+			g.drawString("Player 2 Won!", 200, 400);
+		}
+
 	}
 
 	public void drawGameState(Graphics2D g) {
@@ -136,7 +143,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			characterOne.setDrawLeft(true);
 
 		}
-		if (e.getKeyChar() == KeyEvent.VK_K && currentState == gameState) {
+		if (e.getKeyChar() == KeyEvent.VK_L && currentState == gameState) {
 			characterTwo.x = characterTwo.x + 20;
 			characterTwo.setDrawLeft(false);
 			System.out.println("Test");
@@ -148,6 +155,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 		if (e.getKeyChar() == KeyEvent.VK_W && currentState == gameState) {
 			characterOne.y = characterOne.y - 200;
+
+		}
+		if (e.getKeyChar() == KeyEvent.VK_I && currentState == gameState) {
+			characterTwo.y = characterTwo.y - 200;
 
 		}
 		if (e.getKeyChar() == KeyEvent.VK_S && currentState == menuState) {
@@ -167,6 +178,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			if (System.currentTimeMillis() - time > 3000) {
 				time = System.currentTimeMillis();
 				characterOne.ammo = 5;
+			}
+		}
+		if (characterTwo.ammo > 0) {
+
+			if (e.getKeyChar() == KeyEvent.VK_O && currentState == gameState) {
+				characterTwo.shoot();
+				characterTwo.ammo = characterTwo.ammo - 1;
+			}
+		}
+		if (e.getKeyChar() == KeyEvent.VK_P && currentState == gameState && characterTwo.ammo == 0) {
+			if (System.currentTimeMillis() - time > 3000) {
+				time = System.currentTimeMillis();
+				characterTwo.ammo = 5;
 			}
 		}
 	}
@@ -225,6 +249,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 				turretOne.b.deactivate();
 
 			}
+			if (turretOne.b.bX < characterTwo.x + 175 && turretOne.b.bY > characterTwo.y
+					&& turretOne.b.bY < characterTwo.y + 150 && turretOne.b.active) {
+
+				characterTwo.health = characterTwo.health - 10;
+				turretOne.b.deactivate();
+
+			}
 
 			// Arena 1
 		}
@@ -243,7 +274,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		if (characterTwo.health <= 0) {
 			currentState = endState;
 		}
-
+		if (characterOne.health <= 0 && characterOne.health < characterTwo.health) {
+			p1Won = false;
+			currentState = endState;
+		}
+		if (characterTwo.health <= 0 && characterTwo.health < characterOne.health) {
+			p1Won = true;
+			currentState = endState;
+		}
 	}
 
 }
