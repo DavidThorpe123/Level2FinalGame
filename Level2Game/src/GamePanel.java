@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	long time = System.currentTimeMillis();
 	public boolean hit = false;
 	public boolean p1Won = true;
+	public boolean gravityOn = true;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
@@ -211,43 +212,47 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-		int ac = 5;
+
 		int gravity = 1;
-		gravity = gravity + ac;
-		characterOne.y = (characterOne.y + gravity);
-		characterTwo.y = (characterTwo.y + gravity);
+
+		if (gravityOn) {
+
+			characterOne.y = (characterOne.y + gravity);
+			characterTwo.y = (characterTwo.y + gravity);
+		}
 		// Arena 1
 		if (arenaSelect == 0) {
 			System.out.println(hit);
 
 			if (characterOne.y + characterOne.height >= Arenas.pY && characterOne.x + characterOne.width >= Arenas.pX
-					&& characterOne.x <= Arenas.pX + 150 && characterOne.y + characterOne.height < Arenas.pY + 100) {
-
+					&& characterOne.x <= Arenas.pX + 215 && characterOne.y + characterOne.height < Arenas.pY + 100) {
+				gravityOn = false;
 				characterOne.y = Arenas.pY - characterOne.height;
-			}
-			if (characterTwo.y + characterTwo.height >= Arenas.pY && characterTwo.x + characterTwo.width >= Arenas.pX
-					&& characterTwo.x <= Arenas.pX + 150 && characterTwo.y + characterTwo.height < Arenas.pY + 100) {
-
+			} else if (characterTwo.y + characterTwo.height >= Arenas.pY
+					&& characterTwo.x + characterTwo.width >= Arenas.pX && characterTwo.x <= Arenas.pX + 215
+					&& characterTwo.y + characterTwo.height < Arenas.pY + 100) {
+				gravityOn = false;
 				characterTwo.y = Arenas.pY - characterTwo.height;
-			}
-			if (characterOne.y + characterOne.height >= Arenas.pY3 && characterOne.x + characterOne.width >= Arenas.pX3
-					&& characterOne.x <= Arenas.pX3 + 60 && characterOne.y + characterOne.height < Arenas.pY3 + 100) {
-
+			} else if (characterOne.y + characterOne.height >= Arenas.pY3
+					&& characterOne.x + characterOne.width >= Arenas.pX3 && characterOne.x <= Arenas.pX3 + 60
+					&& characterOne.y + characterOne.height < Arenas.pY3 + 100) {
+				gravityOn = false;
 				characterOne.y = Arenas.pY3 - characterOne.height;
-			}
-			if (characterTwo.y + characterTwo.height >= Arenas.pY3 && characterTwo.x + characterTwo.width >= Arenas.pX3
-					&& characterTwo.x <= Arenas.pX3 + 60 && characterTwo.y + characterTwo.height < Arenas.pY3 + 100) {
-
+			} else if (characterTwo.y + characterTwo.height >= Arenas.pY3
+					&& characterTwo.x + characterTwo.width >= Arenas.pX3 && characterTwo.x <= Arenas.pX3 + 60
+					&& characterTwo.y + characterTwo.height < Arenas.pY3 + 100) {
+				gravityOn = false;
 				characterTwo.y = Arenas.pY3 - characterTwo.height;
 			}
-			System.out.println("Bullet X: " + turretOne.b.bX);
-			System.out.println("Bullet Y: " + turretOne.b.bY);
-			if (turretOne.b.bX < characterOne.x + 175 && turretOne.b.bY > characterOne.y
-					&& turretOne.b.bY < characterOne.y + 150 && turretOne.b.active) {
 
+			else if (turretOne.b.bX < characterOne.x + 175 && turretOne.b.bY > characterOne.y
+					&& turretOne.b.bY < characterOne.y + 150 && turretOne.b.active) {
+				gravityOn = false;
 				characterOne.health = characterOne.health - 10;
 				turretOne.b.deactivate();
 
+			} else {
+				gravityOn = true;
 			}
 			if (turretOne.b.bX < characterTwo.x + 175 && turretOne.b.bY > characterTwo.y
 					&& turretOne.b.bY < characterTwo.y + 150 && turretOne.b.active) {

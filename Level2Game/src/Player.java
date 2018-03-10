@@ -1,7 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class Player extends JPanel {
 	public int height = 75;
 	public int health = 195;
 	public int ammo = 5;
-	public static ImageObserver io;
+
 	boolean drawLeft = false;
 
 	List<PlayerBullet> bullets;
@@ -46,9 +45,9 @@ public class Player extends JPanel {
 	public void draw(Graphics2D g) {
 
 		if (drawLeft) {
-			g.drawImage(i, x + width, y, -width, height, io);
+			g.drawImage(i, x + width, y, -width, height, this);
 		} else {
-			g.drawImage(i, x, y, width, height, io);
+			g.drawImage(i, x, y, width, height, this);
 		}
 
 		for (int i = 0; i < bullets.size(); i++) {

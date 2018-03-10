@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 
 public class PlayerBullet {
 
@@ -25,6 +26,8 @@ public class PlayerBullet {
 	}
 
 	public void update() {
+		System.out.println("Player: X" + p.x);
+		System.out.println("PLayer: Y" + p.y);
 		System.out.println();
 		if (moveLeft) {
 			pbX = pbX - gp.speed;
@@ -39,7 +42,7 @@ public class PlayerBullet {
 		if (hit(this, gp.characterOne)) {
 
 			gp.characterOne.health = gp.characterOne.health - 10;
-
+			System.exit(0);
 		}
 		if (hit(this, gp.characterTwo)) {
 
@@ -49,25 +52,14 @@ public class PlayerBullet {
 	}
 
 	boolean hit(PlayerBullet pb, Player p) {
-		return hit(pb.pbX, pb.pbY, 10, 10, p.x, p.y, p.width, p.height);
+		return hit(p.x, p.y, p.width, p.height, pbX, pbY, 10, 10);
 	}
 
-	private boolean hit(int pbX2, int pbY2, int i, int j, int x, int y, int width, int height) {
-		boolean inX = false;
-		if (pbX2 > x && pbX2 < x + width) {
-			inX = true;
-		}
-		if (pbX2 + i > x && pbX2 + i < x + width) {
-			inX = true;
-		}
-		boolean inY = false;
-		if (pbY2 > y && pbY2 < y + height) {
-			inX = true;
-		}
-		if (pbY2 + j > y && pbY2 + j < y + height) {
-			inX = true;
-		}
-		return inX && inY;
+	private boolean hit(int x, int y, int width, int height, int pbX2, int pbY2, int i, int j) {
+		System.out
+				.println(new Rectangle2D.Double(x, y, width, height) + " " + new Rectangle2D.Double(pbX2, pbY2, i, j));
+		return new Rectangle2D.Double(x, y, width, height).contains(new Rectangle2D.Double(pbX2, pbY2, i, j));
+
 	}
 
 }
