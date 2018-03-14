@@ -34,14 +34,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	long time = System.currentTimeMillis();
 	public boolean hit = false;
 	public boolean p1Won = true;
-	public boolean gravityOn = true;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		characterOne = new Player("Player.png", 50, 0, 200, 150, 5);
-		characterTwo = new Player("Player.png", 500, 0, 200, 150, 5);
+		characterOne = new Player("Player.png", 50, 0, 200, 150, 5, "P1");
+		characterTwo = new Player("Player.png", 500, 0, 200, 150, 5, "P2");
 		small = new Font("Arial", Font.BOLD, 20);
 		turretOne = new Turret(500, 500, 100);
 
@@ -135,31 +134,31 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		if (e.getKeyChar() == KeyEvent.VK_D && currentState == gameState) {
 
-			characterOne.x = characterOne.x + 20;
+			characterOne.xPos = characterOne.xPos + 20;
 			characterOne.setDrawLeft(false);
 		}
 		if (e.getKeyChar() == KeyEvent.VK_A && currentState == gameState) {
 
-			characterOne.x = characterOne.x - 20;
+			characterOne.xPos = characterOne.xPos - 20;
 			characterOne.setDrawLeft(true);
 
 		}
 		if (e.getKeyChar() == KeyEvent.VK_L && currentState == gameState) {
-			characterTwo.x = characterTwo.x + 20;
+			characterTwo.xPos = characterTwo.xPos + 20;
 			characterTwo.setDrawLeft(false);
 			System.out.println("Test");
 		}
 		if (e.getKeyChar() == KeyEvent.VK_J && currentState == gameState) {
-			characterTwo.x = characterTwo.x - 20;
+			characterTwo.xPos = characterTwo.xPos - 20;
 			characterTwo.setDrawLeft(true);
 
 		}
 		if (e.getKeyChar() == KeyEvent.VK_W && currentState == gameState) {
-			characterOne.y = characterOne.y - 200;
+			characterOne.yPos = characterOne.yPos - 200;
 
 		}
 		if (e.getKeyChar() == KeyEvent.VK_I && currentState == gameState) {
-			characterTwo.y = characterTwo.y - 200;
+			characterTwo.yPos = characterTwo.yPos - 200;
 
 		}
 		if (e.getKeyChar() == KeyEvent.VK_S && currentState == menuState) {
@@ -215,47 +214,57 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		int gravity = 1;
 
-		if (gravityOn) {
-
-			characterOne.y = (characterOne.y + gravity);
-			characterTwo.y = (characterTwo.y + gravity);
-		}
 		// Arena 1
 		if (arenaSelect == 0) {
-			System.out.println(hit);
+			// if (characterOne.getGravity()) {
+			if (characterOne.yPos + characterOne.height >= Arenas.pY
+					&& characterOne.xPos + characterOne.width >= Arenas.pX && characterOne.xPos <= Arenas.pX + 215
+					&& characterOne.yPos + characterOne.height < Arenas.pY + 100) {
+				characterOne.setGravityOn(false);
+				characterOne.yPos = Arenas.pY - characterOne.height;
+			} else if (characterOne.yPos + characterOne.height >= Arenas.pY3
+					&& characterOne.xPos + characterOne.width >= Arenas.pX3 && characterOne.xPos <= Arenas.pX3 + 60
+					&& characterOne.yPos + characterOne.height < Arenas.pY3 + 100) {
+				characterOne.setGravityOn(false);
+				characterOne.yPos = Arenas.pY3 - characterOne.height;
 
-			if (characterOne.y + characterOne.height >= Arenas.pY && characterOne.x + characterOne.width >= Arenas.pX
-					&& characterOne.x <= Arenas.pX + 215 && characterOne.y + characterOne.height < Arenas.pY + 100) {
-				gravityOn = false;
-				characterOne.y = Arenas.pY - characterOne.height;
-			} else if (characterTwo.y + characterTwo.height >= Arenas.pY
-					&& characterTwo.x + characterTwo.width >= Arenas.pX && characterTwo.x <= Arenas.pX + 215
-					&& characterTwo.y + characterTwo.height < Arenas.pY + 100) {
-				gravityOn = false;
-				characterTwo.y = Arenas.pY - characterTwo.height;
-			} else if (characterOne.y + characterOne.height >= Arenas.pY3
-					&& characterOne.x + characterOne.width >= Arenas.pX3 && characterOne.x <= Arenas.pX3 + 60
-					&& characterOne.y + characterOne.height < Arenas.pY3 + 100) {
-				gravityOn = false;
-				characterOne.y = Arenas.pY3 - characterOne.height;
-			} else if (characterTwo.y + characterTwo.height >= Arenas.pY3
-					&& characterTwo.x + characterTwo.width >= Arenas.pX3 && characterTwo.x <= Arenas.pX3 + 60
-					&& characterTwo.y + characterTwo.height < Arenas.pY3 + 100) {
-				gravityOn = false;
-				characterTwo.y = Arenas.pY3 - characterTwo.height;
+			} else {
+				characterOne.setGravityOn(true);
+				characterOne.yPos = (characterOne.yPos + gravity);
 			}
+			// }
+			// if (characterTwo.getGravity()) {
+			if (characterTwo.yPos + characterTwo.height >= Arenas.pY
+					&& characterTwo.xPos + characterTwo.width >= Arenas.pX && characterTwo.xPos <= Arenas.pX + 215
+					&& characterTwo.yPos + characterTwo.height < Arenas.pY + 100) {
+				characterTwo.setGravityOn(false);
+				characterTwo.yPos = Arenas.pY - characterTwo.height;
+			} else if (characterTwo.yPos + characterTwo.height >= Arenas.pY3
+					&& characterTwo.xPos + characterTwo.width >= Arenas.pX3 && characterTwo.xPos <= Arenas.pX3 + 60
+					&& characterTwo.yPos + characterTwo.height < Arenas.pY3 + 100) {
+				characterTwo.setGravityOn(false);
+				characterTwo.yPos = Arenas.pY3 - characterTwo.height;
+			} else {
+				characterTwo.setGravityOn(true);
+				characterTwo.yPos = (characterTwo.yPos + gravity);
+			}
+			// }
+			// System.out.println(hit);
 
-			else if (turretOne.b.bX < characterOne.x + 175 && turretOne.b.bY > characterOne.y
-					&& turretOne.b.bY < characterOne.y + 150 && turretOne.b.active) {
-				gravityOn = false;
+			// else {
+			//
+			// characterOne.setGravityOn(true);
+			// characterTwo.setGravityOn(true);
+			// }
+
+			if (turretOne.b.bX < characterOne.xPos + 175 && turretOne.b.bY > characterOne.yPos
+					&& turretOne.b.bY < characterOne.yPos + 150 && turretOne.b.active) {
 				characterOne.health = characterOne.health - 10;
 				turretOne.b.deactivate();
 
-			} else {
-				gravityOn = true;
 			}
-			if (turretOne.b.bX < characterTwo.x + 175 && turretOne.b.bY > characterTwo.y
-					&& turretOne.b.bY < characterTwo.y + 150 && turretOne.b.active) {
+			if (turretOne.b.bX < characterTwo.xPos + 175 && turretOne.b.bY > characterTwo.yPos
+					&& turretOne.b.bY < characterTwo.yPos + 150 && turretOne.b.active) {
 
 				characterTwo.health = characterTwo.health - 10;
 				turretOne.b.deactivate();
@@ -264,16 +273,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 			// Arena 1
 		}
-		if (characterOne.y > 1000) {
-			characterOne.y = 0;
+		if (characterOne.yPos > 1000) {
+			characterOne.yPos = 0;
 			characterOne.health = characterOne.health - 5;
 		}
 
 		if (characterOne.health <= 0) {
 			currentState = endState;
 		}
-		if (characterTwo.y > 1000) {
-			characterTwo.y = 0;
+		if (characterTwo.yPos > 1000) {
+			characterTwo.yPos = 0;
 			characterTwo.health = characterTwo.health - 5;
 		}
 		if (characterTwo.health <= 0) {

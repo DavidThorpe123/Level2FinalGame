@@ -8,27 +8,29 @@ import javax.swing.JPanel;
 
 public class Player extends JPanel {
 	// Image characterOneImage;
-	public int x;
-	public int y;
+	public int xPos;
+	public int yPos;
 	public int c2X;
 	public int c2Y;
-	public int b2X = x;
-	public int b2Y = y;
+	public int b2X = xPos;
+	public int b2Y = yPos;
 	public int width = 150;
 	public int height = 75;
 	public int health = 195;
 	public int ammo = 5;
-
+	boolean gravityOn = true;
 	boolean drawLeft = false;
+	String name;
 
 	List<PlayerBullet> bullets;
 
 	// = new ImageIcon("Untitled-1.gif");
 	public Image i = Toolkit.getDefaultToolkit().createImage("Player.png");
 
-	public Player(String img, int x, int y, int width, int height, int ammo) {
-		this.x = x;
-		this.y = y;
+	public Player(String img, int x, int y, int width, int height, int ammo, String name) {
+		this.name = name;
+		this.xPos = x;
+		this.yPos = y;
 		this.width = width;
 		this.height = height;
 		this.ammo = ammo;
@@ -38,16 +40,32 @@ public class Player extends JPanel {
 		i = Toolkit.getDefaultToolkit().createImage(img);
 	}
 
+	public int getXPos() {
+		return xPos;
+	}
+
+	public int getYPos() {
+		return yPos;
+	}
+
 	public void setDrawLeft(boolean drawLeft) {
 		this.drawLeft = drawLeft;
+	}
+
+	public void setGravityOn(boolean gravityOn) {
+		this.gravityOn = gravityOn;
+	}
+
+	public boolean getGravity() {
+		return gravityOn;
 	}
 
 	public void draw(Graphics2D g) {
 
 		if (drawLeft) {
-			g.drawImage(i, x + width, y, -width, height, this);
+			g.drawImage(i, xPos + width, yPos, -width, height, this);
 		} else {
-			g.drawImage(i, x, y, width, height, this);
+			g.drawImage(i, xPos, yPos, width, height, this);
 		}
 
 		for (int i = 0; i < bullets.size(); i++) {

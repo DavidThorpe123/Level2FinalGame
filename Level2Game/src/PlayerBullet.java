@@ -13,8 +13,8 @@ public class PlayerBullet {
 	PlayerBullet(Player p) {
 		gp = new GamePanel();
 		this.p = p;
-		pbX = p.x + 100;
-		pbY = p.y + 50;
+		pbX = p.getXPos() + 100;
+		pbY = p.getYPos() + 50;
 		moveLeft = p.drawLeft;
 	}
 
@@ -26,8 +26,15 @@ public class PlayerBullet {
 	}
 
 	public void update() {
-		System.out.println("Player: X" + p.x);
-		System.out.println("PLayer: Y" + p.y);
+		System.out.println("Player: " + p.name);
+		System.out.println("Player: X" + p.getXPos());
+		System.out.println("PLayer: Y" + p.getYPos());
+		System.out.println("Player: " + gp.characterOne.name);
+		System.out.println("Player1: X" + gp.characterOne.getXPos());
+		System.out.println("PLayer1: Y" + gp.characterOne.getYPos());
+		System.out.println("Player: " + gp.characterTwo.name);
+		System.out.println("Player2: X" + gp.characterTwo.getXPos());
+		System.out.println("PLayer2: Y" + gp.characterTwo.getYPos());
 		System.out.println();
 		if (moveLeft) {
 			pbX = pbX - gp.speed;
@@ -52,7 +59,7 @@ public class PlayerBullet {
 	}
 
 	boolean hit(PlayerBullet pb, Player p) {
-		return hit(p.x, p.y, p.width, p.height, pbX, pbY, 10, 10);
+		return hit(p.getXPos(), p.getYPos(), p.width, p.height, pbX, pbY, 10, 10);
 	}
 
 	private boolean hit(int x, int y, int width, int height, int pbX2, int pbY2, int i, int j) {
