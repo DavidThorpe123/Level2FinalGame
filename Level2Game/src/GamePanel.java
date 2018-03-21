@@ -39,8 +39,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
-		characterOne = new Player("Player.png", 50, 0, 200, 150, 5, "P1");
-		characterTwo = new Player("Player.png", 500, 0, 200, 150, 5, "P2");
+		characterOne = new Player("Player.png", 50, 0, 200, 150, 5, "P1", this);
+		characterTwo = new Player("Player.png", 500, 0, 200, 150, 5, "P2", this);
 		small = new Font("Arial", Font.BOLD, 20);
 		turretOne = new Turret(500, 500, 100);
 
@@ -212,7 +212,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 		repaint();
 
-		int gravity = 1;
+		int gravity = 5;
 
 		// Arena 1
 		if (arenaSelect == 0) {

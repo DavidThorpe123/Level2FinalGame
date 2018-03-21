@@ -21,13 +21,15 @@ public class Player extends JPanel {
 	boolean gravityOn = true;
 	boolean drawLeft = false;
 	String name;
+	GamePanel gp;
 
 	List<PlayerBullet> bullets;
 
 	// = new ImageIcon("Untitled-1.gif");
 	public Image i = Toolkit.getDefaultToolkit().createImage("Player.png");
 
-	public Player(String img, int x, int y, int width, int height, int ammo, String name) {
+	public Player(String img, int x, int y, int width, int height, int ammo, String name, GamePanel gamePanel) {
+		this.gp = gamePanel;
 		this.name = name;
 		this.xPos = x;
 		this.yPos = y;
@@ -75,6 +77,10 @@ public class Player extends JPanel {
 
 	}
 
+	public GamePanel getGamePanel() {
+		return gp;
+	}
+
 	public void shoot() {
 
 		PlayerBullet pb = new PlayerBullet(this);
@@ -83,6 +89,10 @@ public class Player extends JPanel {
 
 	public void removeBullet(PlayerBullet playerBullet) {
 		bullets.remove(playerBullet);
+	}
+
+	public boolean owns(PlayerBullet pb) {
+		return bullets.contains(pb);
 	}
 
 }

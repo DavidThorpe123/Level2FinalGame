@@ -11,7 +11,7 @@ public class PlayerBullet {
 	GamePanel gp;
 
 	PlayerBullet(Player p) {
-		gp = new GamePanel();
+		gp = p.getGamePanel();
 		this.p = p;
 		pbX = p.getXPos() + 100;
 		pbY = p.getYPos() + 50;
@@ -37,6 +37,7 @@ public class PlayerBullet {
 		System.out.println("PLayer2: Y" + gp.characterTwo.getYPos());
 		System.out.println();
 		if (moveLeft) {
+
 			pbX = pbX - gp.speed;
 		}
 		if (!moveLeft) {
@@ -49,16 +50,21 @@ public class PlayerBullet {
 		if (hit(this, gp.characterOne)) {
 
 			gp.characterOne.health = gp.characterOne.health - 10;
-			System.exit(0);
+			p.removeBullet(this);
+
 		}
 		if (hit(this, gp.characterTwo)) {
 
 			gp.characterTwo.health = gp.characterTwo.health - 10;
+			p.removeBullet(this);
 
 		}
 	}
 
 	boolean hit(PlayerBullet pb, Player p) {
+		if (p.owns(pb)) {
+			return false;
+		}
 		return hit(p.getXPos(), p.getYPos(), p.width, p.height, pbX, pbY, 10, 10);
 	}
 
