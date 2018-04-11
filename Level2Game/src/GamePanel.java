@@ -34,6 +34,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	long time = System.currentTimeMillis();
 	public boolean hit = false;
 	public boolean p1Won = true;
+	public boolean p1CanJump = false;
+	public boolean p2CanJump = false;
+	int p1Jump = 0;
+	int p2Jump = 0;
 
 	GamePanel() {
 		menuFont = new Font("Arial", Font.BOLD, 40);
@@ -153,12 +157,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			characterTwo.setDrawLeft(true);
 
 		}
-		if (e.getKeyChar() == KeyEvent.VK_W && currentState == gameState) {
-			characterOne.yPos = characterOne.yPos - 200;
+		if (e.getKeyChar() == KeyEvent.VK_W && currentState == gameState && p1CanJump == true) {
+			// characterOne.yPos = characterOne.yPos - 300;
+			p1Jump = 45;
 
 		}
-		if (e.getKeyChar() == KeyEvent.VK_I && currentState == gameState) {
-			characterTwo.yPos = characterTwo.yPos - 200;
+		if (e.getKeyChar() == KeyEvent.VK_I && currentState == gameState && p2CanJump == true) {
+			// characterTwo.yPos = characterTwo.yPos - 300;
+			p2Jump = 45;
 
 		}
 		if (e.getKeyChar() == KeyEvent.VK_S && currentState == menuState) {
@@ -213,7 +219,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		repaint();
 
 		int gravity = 5;
-
+		if (p1Jump > 0) {
+			p1Jump--;
+			characterOne.yPos = characterOne.yPos - gravity - gravity;
+		}
+		if (p2Jump > 0) {
+			p2Jump--;
+			characterTwo.yPos = characterTwo.yPos - gravity - gravity;
+		}
 		// Arena 1
 		if (arenaSelect == 0) {
 			// if (characterOne.getGravity()) {
@@ -221,15 +234,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 					&& characterOne.xPos + characterOne.width >= Arenas.pX && characterOne.xPos <= Arenas.pX + 215
 					&& characterOne.yPos + characterOne.height < Arenas.pY + 100) {
 				characterOne.setGravityOn(false);
+				p1CanJump = true;
 				characterOne.yPos = Arenas.pY - characterOne.height;
 			} else if (characterOne.yPos + characterOne.height >= Arenas.pY3
 					&& characterOne.xPos + characterOne.width >= Arenas.pX3 && characterOne.xPos <= Arenas.pX3 + 60
 					&& characterOne.yPos + characterOne.height < Arenas.pY3 + 100) {
 				characterOne.setGravityOn(false);
+				p1CanJump = true;
 				characterOne.yPos = Arenas.pY3 - characterOne.height;
 
 			} else {
 				characterOne.setGravityOn(true);
+				p1CanJump = false;
 				characterOne.yPos = (characterOne.yPos + gravity);
 			}
 			// }
@@ -238,14 +254,17 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 					&& characterTwo.xPos + characterTwo.width >= Arenas.pX && characterTwo.xPos <= Arenas.pX + 215
 					&& characterTwo.yPos + characterTwo.height < Arenas.pY + 100) {
 				characterTwo.setGravityOn(false);
+				p2CanJump = true;
 				characterTwo.yPos = Arenas.pY - characterTwo.height;
 			} else if (characterTwo.yPos + characterTwo.height >= Arenas.pY3
 					&& characterTwo.xPos + characterTwo.width >= Arenas.pX3 && characterTwo.xPos <= Arenas.pX3 + 60
 					&& characterTwo.yPos + characterTwo.height < Arenas.pY3 + 100) {
 				characterTwo.setGravityOn(false);
+				p2CanJump = true;
 				characterTwo.yPos = Arenas.pY3 - characterTwo.height;
 			} else {
 				characterTwo.setGravityOn(true);
+				p2CanJump = false;
 				characterTwo.yPos = (characterTwo.yPos + gravity);
 			}
 			// }
