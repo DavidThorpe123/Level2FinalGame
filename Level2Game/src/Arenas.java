@@ -13,7 +13,7 @@ public class Arenas {
 	public static int pY4 = 25;
 	Font f;
 
-	public void drawArenaOne(Graphics g, int health, int health2, int ammo, int ammo2) {
+	public void drawArenaOne(Graphics g, int health, int health2, int ammo, int ammo2, long reloadTime) {
 		f = new Font("Arial", Font.BOLD, 30);
 		g.fillRect(pX, pY, 300, 100);
 		g.fillRect(pX2, pY2, 100, 100);
@@ -29,6 +29,12 @@ public class Arenas {
 		g.setColor(Color.BLUE);
 		g.drawString("Player 2 Health: " + health2, 700, 100);
 		g.drawString("Player 2 Ammo: " + ammo2, 700, 150);
+		if (ammo <= 0) {
+			g.drawString("Reloading: " + reloadTime, 35, 175);
+		}
+		if (ammo2 <= 0) {
+			g.drawString("Reloading: " + reloadTime, 700, 175);
+		}
 		// System.out.println("1");
 
 	}

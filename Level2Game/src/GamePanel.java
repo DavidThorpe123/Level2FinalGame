@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Font instructionFont;
 	Font characterSelect;
 	Font small;
+	Font endScreen;
 	Graphics g;
 	Timer t;
 	Arenas a;
@@ -43,6 +44,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		menuFont = new Font("Arial", Font.BOLD, 40);
 		instructionFont = new Font("Arial", Font.BOLD, 40);
 		characterSelect = new Font("Arial", Font.BOLD, 30);
+		endScreen = new Font("Arial", Font.BOLD, 60);
 		characterOne = new Player("Player.png", 50, 0, 200, 150, 5, "P1", this);
 		characterTwo = new Player("Player.png", 500, 0, 200, 150, 5, "P2", this);
 		small = new Font("Arial", Font.BOLD, 20);
@@ -94,13 +96,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	public void drawEndState(Graphics g) {
-		g.setFont(menuFont);
+		g.setFont(endScreen);
 		g.setColor(Color.RED);
 		if (p1Won == true) {
-			g.drawString("Player 1 Won!", 200, 400);
+			g.drawString("Player 1 Won!", 300, 400);
 		}
 		if (p1Won == false) {
-			g.drawString("Player 2 Won!", 200, 400);
+			g.drawString("Player 2 Won!", 300, 400);
 		}
 
 	}
@@ -109,7 +111,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		switch (arenaSelect) {
 		case 0:
-			a.drawArenaOne(g, characterOne.health, characterTwo.health, characterOne.ammo, characterTwo.ammo);
+			a.drawArenaOne(g, characterOne.health, characterTwo.health, characterOne.ammo, characterTwo.ammo,
+					(System.currentTimeMillis() - time) / 1000);
 			Turret.tX = 700;
 			Turret.tY = 400;
 			break;
